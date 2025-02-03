@@ -11,6 +11,7 @@ class DatabaseManager:
 
     def get_all_emotions(self):
         emotions = []
+        #print(emotions)
         try:
             with open(self.filename, "r") as file:
                 emotions = file.readlines()

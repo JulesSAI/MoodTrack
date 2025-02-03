@@ -1,7 +1,5 @@
 02-02-2025 | Neutral | kk
-03-02-2025 | Feliz | kk
-04-02-2025 | Muy Triste | kk
-02-02-2025 | Muy Triste | iji
-02-02-2025 | Muy Feliz | 
-02-02-2025 | Neutral | 
-02-02-2025 | Neutral | 
+03-02-2025 | Triste | xd
+04-02-2025 | Muy Triste | sad
+05-02-2025 | Muy Feliz | sad
+01-02-2025 | Feliz | sad
