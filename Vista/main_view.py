@@ -22,6 +22,10 @@ class MainView(tk.Tk):
         self.selected_emotion.set("Muy Feliz")
         self.selected_date = tk.StringVar()
 
+         # Lista para almacenar los botones de emociones
+        self.emotion_buttons = []
+
+    
         # Establecer fecha por defecto
         self.set_default_date()
 
@@ -94,11 +98,10 @@ class MainView(tk.Tk):
         return ImageTk.PhotoImage(img)
     
     def create_emotion_buttons(self):
-        # Crear botones con iconos
         button_frame = tk.Frame(self)
         button_frame.pack(pady=10)
 
-        # Botones de emociones (de izquierda a derecha)
+        # Crear y almacenar botones en la lista
         self.create_emotion_button(button_frame, self.very_happy_icon, "Muy Feliz")
         self.create_emotion_button(button_frame, self.happy_icon, "Feliz")
         self.create_emotion_button(button_frame, self.neutral_icon, "Neutral")
@@ -106,20 +109,36 @@ class MainView(tk.Tk):
         self.create_emotion_button(button_frame, self.very_sad_icon, "Muy Triste")
     
     def create_emotion_button(self, frame, icon, emotion):
-        # Crear un botón y asignarle una acción para cambiar la emoción seleccionada
-        button = tk.Button(frame, image=icon, command=lambda e=emotion: self.set_emotion(e, button))
+        # Crear botón sin la función command primero
+        button = tk.Button(frame, image=icon)
+
+        # Ahora, asignar el command, pasándole el botón correctamente
+        button.config(command=lambda e=emotion, btn=button: self.set_emotion(e, btn))
+
         button.pack(side="left", padx=10)
+
+        # Agregar el botón a la lista de botones
+        self.emotion_buttons.append(button)
 
     def set_emotion(self, emotion, button):
         # Cambiar la emoción seleccionada
         self.selected_emotion.set(emotion)
-        
+
         # Resaltar el botón seleccionado
         self.highlight_selected_button(button)
 
     def highlight_selected_button(self, button):
-        # Cambiar color de fondo del botón seleccionado
-        button.config(bg="lightblue")  # Resalta el botón con color azul claro
+        # Restablecer colores de todos los botones antes de resaltar el seleccionado
+        self.reset_button_colors()
+
+        # Resaltar el botón seleccionado
+        button.config(bg="lightblue")
+
+    def reset_button_colors(self):
+        """ Restaura todos los botones a su color original """
+        for btn in self.emotion_buttons:
+            btn.config(bg="SystemButtonFace")  # Color original en Windows    
+
 
  
 

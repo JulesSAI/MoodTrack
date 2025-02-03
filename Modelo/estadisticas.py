@@ -21,7 +21,7 @@ class EmotionStats:
             data.append({"Fecha": date, "Emoción": emotion})
 
         df = pd.DataFrame(data)
-        df["Fecha"] = pd.to_datetime(df["Fecha"])  
+        df["Fecha"] = pd.to_datetime(df["Fecha"], dayfirst=True) 
         df = df.sort_values(by="Fecha")  # Ordenar por fecha
         return df
 
