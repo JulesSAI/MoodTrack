@@ -52,7 +52,7 @@ class EmotionStats:
             data=self.df, 
             marker="o", 
             hue="Emoción", 
-            palette="coolwarm", 
+            palette="icefire", 
             legend="full"
         )
 

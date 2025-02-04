@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import messagebox
+from tkinter import ttk
 from tkcalendar import Calendar
-from PIL import Image, ImageTk  
+from PIL import Image, ImageTk
 import datetime
 from Controlador.emotion_controller import EmotionController
 from Vista.stats_view import StatsView
@@ -12,36 +13,33 @@ class MainView(tk.Tk):
 
         self.controller = controller
         self.title("Registro de Emociones")
-        self.geometry("500x600")
+        self.geometry("360x700")
 
-        title_label = tk.Label(self, text="MoodTrack", font=("Helvetica", 20, "bold"), fg="purple")
-        title_label.pack(pady=10)  # Esto agrega espacio arriba del título
+        # Establecer tema visual
+        self.style = ttk.Style()
+        self.style.configure("TButton", padding=6, relief="flat", background="#6200ea", foreground="white", font=("Arial", 12))
+        self.style.configure("TLabel", font=("Arial", 11))
+        self.style.configure("Custom.TButton", padding=6, font=("Arial", 12), background="#6200ea", foreground="black")
 
         # Variables
         self.selected_emotion = tk.StringVar()
         self.selected_emotion.set("Muy Feliz")
         self.selected_date = tk.StringVar()
-
-         # Lista para almacenar los botones de emociones
         self.emotion_buttons = []
 
-    
-        # Establecer fecha por defecto
         self.set_default_date()
-
-        # Etiquetas y componentes
         self.create_widgets()
 
     def set_default_date(self):
-        # Fecha de hoy
         today = datetime.datetime.now().strftime("%d-%m-%Y")
         self.selected_date.set(today)
 
     def create_widgets(self):
+        title_label = ttk.Label(self, text="MoodTrack", font=("Helvetica", 20, "bold"), foreground="purple")
+        title_label.grid(row=0, column=0, columnspan=2, pady=10)
 
-        # Label para seleccionar emoción
-        label = tk.Label(self, text="Selecciona emoción:")
-        label.pack(pady=5)
+        label = ttk.Label(self, text="Selecciona emoción:")
+        label.grid(row=1, column=0, columnspan=2, pady=5)
 
         # Cargar iconos de emociones
         self.happy_icon = self.load_image("feliz.jpg")
@@ -53,127 +51,83 @@ class MainView(tk.Tk):
         # Botones de emociones
         self.create_emotion_buttons()
 
+        note_label = ttk.Label(self, text="Añadir nota:")
+        note_label.grid(row=3, column=0, pady=5)
 
-        # Nota
-        note_label = tk.Label(self, text="Añadir nota:")
-        note_label.pack()
+        self.note_entry = ttk.Entry(self, width=40)
+        self.note_entry.grid(row=3, column=1, pady=5, padx=5)
 
-        self.note_entry = tk.Entry(self)
-        self.note_entry.pack()
+        self.date_label = ttk.Label(self, text=f"Fecha seleccionada: {self.selected_date.get()}")
+        self.date_label.grid(row=4, column=0, columnspan=2, pady=5)
 
-        # Label para fecha seleccionada
-        self.date_label = tk.Label(self, text=f"Fecha seleccionada: {self.selected_date.get()}")
-        self.date_label.pack()
+        other_day_button = ttk.Button(self, text="Otro día", command=self.show_calendar, style="Custom.TButton")
+        other_day_button.grid(row=5, column=0, columnspan=2, pady=5)
 
-        # Botón para seleccionar otro día
-        other_day_button = tk.Button(self, text="Otro día", command=self.show_calendar)
-        other_day_button.pack(pady=5)
-
-        # Mostrar el calendario (inicialmente oculto)
         self.calendar = Calendar(self, selectmode='day', date_pattern='dd-mm-yyyy')
-        self.calendar.pack(pady=10)
-        self.calendar.pack_forget()  # Ocultar el calendario al inicio
+        self.calendar.grid(row=6, column=0, columnspan=2, pady=10)
+        self.calendar.grid_remove()
 
-        # Botón de guardar
-        save_button = tk.Button(self, text="Guardar Emoción", command=self.save_emotion)
-        save_button.pack()
+        save_button = ttk.Button(self, text="Guardar Emoción", command=self.save_emotion, style="Custom.TButton")
+        save_button.grid(row=7, column=0, columnspan=2, pady=5)
 
-        # Botón de estadísticas
-        stats_button = tk.Button(self, text="Ver Estadísticas", command=self.show_statistics)
-        stats_button.pack()
+        stats_button = ttk.Button(self, text="Ver Estadísticas", command=self.show_statistics, style="Custom.TButton")
+        stats_button.grid(row=8, column=0, columnspan=2, pady=5)
 
-        # Etiqueta para mostrar la emoción guardada
-        self.display_label = tk.Label(self, text="Aquí aparecerá la emoción registrada...")
-        self.display_label.pack()
+        self.display_label = ttk.Label(self, text="Aquí aparecerá la emoción registrada...", foreground="gray")
+        self.display_label.grid(row=9, column=0, columnspan=2, pady=5)
 
-        select_date_button = tk.Button(self, text="Seleccionar Fecha", command=self.select_date)
-        select_date_button.pack(pady=5)
-    
-    def load_image(self, path):
-        # Cargar imagen y redimensionarla
-        img_path = f"Vista/Recursos/{path}"
-        print(f"Ruta del archivo: {img_path}")  # Para depurar la ruta
-        img = Image.open(img_path)
-        img = img.resize((40, 40))  # Ajusta el tamaño del icono
-        return ImageTk.PhotoImage(img)
+        select_date_button = ttk.Button(self, text="Seleccionar Fecha", command=self.select_date, style="Custom.TButton")
+        select_date_button.grid(row=10, column=0, columnspan=2, pady=5)
     
     def create_emotion_buttons(self):
-        button_frame = tk.Frame(self)
-        button_frame.pack(pady=10)
+        button_frame = ttk.Frame(self)
+        button_frame.grid(row=2, column=0, columnspan=2, pady=10)
 
-        # Crear y almacenar botones en la lista
-        self.create_emotion_button(button_frame, self.very_happy_icon, "Muy Feliz")
-        self.create_emotion_button(button_frame, self.happy_icon, "Feliz")
-        self.create_emotion_button(button_frame, self.neutral_icon, "Neutral")
-        self.create_emotion_button(button_frame, self.sad_icon, "Triste")
-        self.create_emotion_button(button_frame, self.very_sad_icon, "Muy Triste")
+        emotions = [
+            ("Muy Feliz", self.very_happy_icon),
+            ("Feliz", self.happy_icon),
+            ("Neutral", self.neutral_icon),
+            ("Triste", self.sad_icon),
+            ("Muy Triste", self.very_sad_icon)
+        ]
+        
+        for emotion, icon in emotions:
+            button = ttk.Button(button_frame, image=icon, command=lambda e=emotion: self.set_emotion(e))
+            button.pack(side="left", padx=5)
+            self.emotion_buttons.append(button)
     
-    def create_emotion_button(self, frame, icon, emotion):
-        # Crear botón sin la función command primero
-        button = tk.Button(frame, image=icon)
+    def load_image(self, path):
+        img_path = f"Vista/Recursos/{path}"
+        img = Image.open(img_path)
+        img = img.resize((40, 40))
+        return ImageTk.PhotoImage(img)
 
-        # Ahora, asignar el command, pasándole el botón correctamente
-        button.config(command=lambda e=emotion, btn=button: self.set_emotion(e, btn))
-
-        button.pack(side="left", padx=10)
-
-        # Agregar el botón a la lista de botones
-        self.emotion_buttons.append(button)
-
-    def set_emotion(self, emotion, button):
-        # Cambiar la emoción seleccionada
+    def set_emotion(self, emotion):
         self.selected_emotion.set(emotion)
-
-        # Resaltar el botón seleccionado
-        self.highlight_selected_button(button)
-
-    def highlight_selected_button(self, button):
-        # Restablecer colores de todos los botones antes de resaltar el seleccionado
-        self.reset_button_colors()
-
-        # Resaltar el botón seleccionado
-        button.config(bg="lightblue")
-
-    def reset_button_colors(self):
-        """ Restaura todos los botones a su color original """
-        for btn in self.emotion_buttons:
-            btn.config(bg="SystemButtonFace")  # Color original en Windows    
-
-
- 
+        self.display_label.config(text=f"Emoción seleccionada: {emotion}")
+    
+    def set_emotion(self, emotion):
+        self.selected_emotion.set(emotion)
+        self.display_label.config(text=f"Emoción seleccionada: {emotion}")
 
     def show_calendar(self):
-        # Mostrar el calendario y actualizar la etiqueta de la fecha
-        self.calendar.pack()
+        self.calendar.grid()
         self.date_label.config(text="Seleccione una fecha:")
 
-        # Ocultar el botón de "Otro día"
-        self.date_label.pack_forget()
-
-     
-
     def select_date(self):
-        # Obtener la fecha seleccionada
         selected_date = self.calendar.get_date()
         self.selected_date.set(selected_date)
-
-        # Actualizar la etiqueta con la nueva fecha
         self.date_label.config(text=f"Fecha seleccionada: {selected_date}")
-
-        # Ocultar el calendario y el botón de selección de fecha
-        self.calendar.pack_forget()
-        self.date_label.pack()
-        
+        self.calendar.grid_remove()
 
     def save_emotion(self):
         emotion = self.selected_emotion.get()
         note = self.note_entry.get()
         selected_date = self.selected_date.get()
-
-        # Validar la fecha
+        
         if self.is_valid_date(selected_date):
             self.controller.insert_emotion(emotion, note, selected_date)
-            self.display_label.config(text=f"Emoción de: {selected_date}\nEmoción: {emotion}\nNota: {note}")
+            self.display_label.config(text=f"Emoción de {selected_date}: {emotion}\nNota: {note}")
         else:
             messagebox.showerror("Error", "Fecha inválida")
 

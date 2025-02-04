@@ -1,5 +1,11 @@
-02-02-2025 | Neutral | kk
-03-02-2025 | Triste | xd
-04-02-2025 | Muy Triste | sad
-05-02-2025 | Muy Feliz | sad
-01-02-2025 | Feliz | sad
+01-02-2025 | Feliz | Hoy estuvo bastante bien, nada fuera de lo normal, pero me sentí tranquilo.  
+02-02-2025 | Neutral | Día sin muchas emociones, solo pasando el rato.  
+03-02-2025 | Triste | No sé, siento que algo me falta, pero no sé qué.  
+03-02-2025 | Muy Feliz | Fue un día increíble, todo salió mejor de lo que esperaba.  
+04-02-2025 | Muy Triste | Simplemente uno de esos días en los que nada tiene sentido.  
+05-02-2025 | Muy Feliz | Siento que nada puede arruinar mi ánimo hoy.  
+07-02-2025 | Feliz | Buen día, sin preocupaciones, todo fluyó bien.  
+08-02-2025 | Muy Triste | Quisiera que todo fuera diferente, pero no sé por dónde empezar.  
+09-02-2025 | Triste | Extraño cosas que ni siquiera sé si tuvieron sentido.  
+12-02-2025 | Muy Triste | A veces parece que nadie nota cuando no estoy bien.  
+13-02-2025 | Muy Feliz | Hoy fue un día especial, de esos que recordaré con una sonrisa.
