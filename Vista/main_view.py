@@ -127,7 +127,9 @@ class MainView(tk.Tk):
         
         if self.is_valid_date(selected_date):
             self.controller.insert_emotion(emotion, note, selected_date)
+            messagebox.showinfo("Emoción Guardada", f"Emoción: {emotion}\nFecha: {selected_date}\nNota: {note if note else 'Sin nota'}")
             self.display_label.config(text=f"Emoción de {selected_date}: {emotion}\nNota: {note}")
+
         else:
             messagebox.showerror("Error", "Fecha inválida")
 
